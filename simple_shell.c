@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 void signal_handler(int signum)
 {
@@ -27,12 +28,12 @@ int main(void)
 
 	signal(SIGINT, signal_handler);
 
-	while (1)//infinite loop
+	while (1)
 	{
 		buffer = NULL;
 		size = 0;
 		argv = NULL;
-		if (isatty(0) == 1)//if is terminal print $
+		if (isatty(0) == 1)
 			printf("$");
 		characters_read = getline(&buffer, &size, stdin);
 		if (characters_read < 0)
@@ -43,7 +44,6 @@ int main(void)
 				printf("\n");
 				return (0);
 			}
-			//printf("Error reading chars\n");
 			return (-1);
 		}
 		if (buffer[characters_read - 1] == '\n')

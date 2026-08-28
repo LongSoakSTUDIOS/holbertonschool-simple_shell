@@ -57,7 +57,7 @@ int main(void)
 			i++;
 		}
 		argc++;
-		argv = malloc(sizeof(char *) * argc + 1);
+		argv = malloc(sizeof(char *) * (argc + 1));
 		if (argv == NULL)
 		{
 			free(buffer);

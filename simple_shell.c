@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <dirent.h>
+
+extern char **environ;
 
 void signal_handler(int signum)
 {
@@ -13,6 +16,54 @@ void signal_handler(int signum)
 		printf("$");
 		fflush(stdout);
 	}
+}
+
+char *find_exec(char *full_path, char *command)
+{
+	char *token;
+	char *temp;
+
+	if (!full_path || !command)
+		return (NULL);
+	token = strtok(full_path, ":");
+	while (token != NULL)
+	{
+		temp = malloc(strlen(token) + strlen(command) + 2);
+		strcpy(temp, token);
+		strcat(temp, "/");
+		strcat(temp, command);
+		if (access(temp, X_OK) == 0)
+		{
+			return (temp);
+		}
+		token = strtok(NULL, ":");
+		free(temp);
+	}
+	return (NULL);
+}
+
+char *_getenv(const char *name)
+{
+	int i = 0;
+	char *token;
+	char *var;
+	char *path;
+	
+	while (environ[i])
+	{
+		var = strdup(environ[i]);
+		token = strtok(var, "=");
+		if(strcmp(name, token) == 0)
+		{
+			token = strtok(NULL, "=");
+			path = strdup(token);
+			free(var);
+			return(path);
+		}
+		free(var);
+		i++;
+	}
+	return (NULL);
 }
 
 int main(void)
@@ -25,6 +76,8 @@ int main(void)
 	int i = 0;
 	int argc = 0;
 	int status;
+	char *valid_path;
+	char *full_path;
 
 	signal(SIGINT, signal_handler);
 
@@ -78,25 +131,50 @@ int main(void)
 			free(buffer);
 			continue;
 		}
+		full_path = _getenv("PATH");
+		if (!full_path)
+		{
+			perror("Error: P");
+			free(argv);
+			free(buffer);
+			continue;
+		}
+		valid_path = find_exec(full_path, argv[0]);
+		if (!valid_path)
+		{
+			perror("Error: Ex");
+			free(full_path);
+			free(argv);
+			free(buffer);
+			continue;
+		}
 		child_id = fork();
 		if (child_id == -1)
 		{
 			perror("Error:");
+			free(valid_path);
+			free(full_path);
 			free(argv);
 			free(buffer);
 			return (1);
 		}
 		if (child_id == 0)
 		{
-			if (execve(argv[0], argv, NULL) == -1)
+			if (execve(valid_path, argv, NULL) == -1)
 			{
 				perror("Error:");
+				free(valid_path);
+				free(full_path);
+				free(argv);
+				free(buffer);
 				exit(127);
 			}
 		}
 		else
 		{
 			wait(&status);
+			free(valid_path);
+			free(full_path);
 			free(buffer);
 			free(argv);
 		}

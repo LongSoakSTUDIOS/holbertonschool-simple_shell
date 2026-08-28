@@ -57,6 +57,7 @@ char *_getenv(const char *name)
 	char *token;
 	char *var;
 	char *path;
+	char empty_string[] = "\0";
 	
 	if (!environ)
 		return (NULL);
@@ -72,7 +73,7 @@ char *_getenv(const char *name)
 			if (!token)
 			{
 				free(var);
-				return (NULL);
+				return (empty_string);
 			}
 			path = strdup(token);
 			if (!path)
@@ -157,6 +158,12 @@ int main(void)
 		full_path = _getenv("PATH");
 		if (!full_path)
 			full_path = strdup("/bin");
+		else if (*full_path = '\0')
+		{
+			//fprintf(stderr, "%s: %d: %s: not found\n", argv[0], line_number, command);
+			free(argv);
+			free(buffer);
+		}
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)
 		{

@@ -63,13 +63,17 @@ char *_getenv(const char *name)
 	while (environ[i])
 	{
 		var = strdup(environ[i]);
+		if (!var)
+			return (NULL);
 		token = strtok(var, "=");
 		if(strcmp(name, token) == 0)
 		{
 			token = strtok(NULL, "=");
-			if (strcmp(token, "") == 0)
+			if (!token)
 				return (NULL);
 			path = strdup(token);
+			if (!path)
+				return (NULL);
 			free(var);
 			return(path);
 		}

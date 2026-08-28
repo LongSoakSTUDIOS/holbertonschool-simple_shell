@@ -70,10 +70,16 @@ char *_getenv(const char *name)
 		{
 			token = strtok(NULL, "=");
 			if (!token)
+			{
+				free(var);
 				return (NULL);
+			}
 			path = strdup(token);
 			if (!path)
+			{
+				free(var);
 				return (NULL);
+			}
 			free(var);
 			return(path);
 		}

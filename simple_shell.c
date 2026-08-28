@@ -160,7 +160,7 @@ int main(void)
 		full_path = _getenv("PATH");
 		if (!full_path)
 			full_path = strdup("/bin");
-		else if (full_path == '\0')
+		else if (*full_path == '\0')
 		{
 			perror(argv[0]);
 			free(argv);

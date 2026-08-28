@@ -39,9 +39,8 @@ int main(void)
 		if (characters_read < 0)
 		{
 			free(buffer);
-			if (feof(stdin))
+			if (characters_read == EOF)
 			{
-				printf("\n");
 				return (0);
 			}
 			return (-1);
@@ -76,6 +75,7 @@ int main(void)
 		if (argv[0] == NULL)
 		{
 			free(argv);
+			free(buffer);
 			continue;
 		}
 		child_id = fork();

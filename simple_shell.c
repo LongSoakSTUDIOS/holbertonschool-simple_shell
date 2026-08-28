@@ -142,12 +142,7 @@ int main(void)
 		}
 		full_path = _getenv("PATH");
 		if (!full_path)
-		{
-			perror("Error: P");
-			free(argv);
-			free(buffer);
-			continue;
-		}
+			full_path = strdup("/bin");
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)
 		{

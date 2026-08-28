@@ -6,9 +6,12 @@
 
 void signal_handler(int signum)
 {
-	printf("\n");
-	printf("$");
-	fflush(stdout);
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		printf("$");
+		fflush(stdout);
+	}
 }
 
 int main(void)

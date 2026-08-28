@@ -25,6 +25,15 @@ char *find_exec(char *full_path, char *command)
 
 	if (!full_path || !command)
 		return (NULL);
+	if (strchr(command, '/') != NULL)
+	{
+		if (access(command, X_OK) == 0)
+		{
+			temp = strdup(command);
+			return (temp);
+		}
+		return (NULL);
+	}
 	token = strtok(full_path, ":");
 	while (token != NULL)
 	{
@@ -76,8 +85,8 @@ int main(void)
 	int i = 0;
 	int argc = 0;
 	int status;
-	char *valid_path;
-	char *full_path;
+	char *valid_path = NULL;
+	char *full_path = NULL;
 
 	signal(SIGINT, signal_handler);
 
@@ -179,6 +188,5 @@ int main(void)
 			free(argv);
 		}
 	}
-
 	return (0);
 }

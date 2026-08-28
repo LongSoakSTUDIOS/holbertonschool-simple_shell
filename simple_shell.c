@@ -160,11 +160,12 @@ int main(void)
 		full_path = _getenv("PATH");
 		if (!full_path)
 			full_path = strdup("/bin");
-		else if (*full_path == '\0')
+		else if (full_path == '\0')
 		{
-			/*fprintf(stderr, "%s: %d: %s: not found\n", argv[0], line_number, command);*/
+			perror(argv[0]);
 			free(argv);
 			free(buffer);
+			continue;
 		}
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)

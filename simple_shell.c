@@ -169,7 +169,7 @@ int main(int ac, char **av)
 			free(full_path);
 			free(argv);
 			free(buffer);
-			continue;
+			exit(127);
 		}
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)

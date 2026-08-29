@@ -111,6 +111,7 @@ int main(int ac, char **av)
 	int status;
 	char *valid_path = NULL;
 	char *full_path = NULL;
+	int error_code = 0;
 
 	(void)ac;
 
@@ -152,6 +153,23 @@ int main(int ac, char **av)
 			return (-1);
 		}
 		token = strtok(buffer, " ");
+		if (strcmp(token, "exit") == 0)
+		{
+			token = strtok(NULL, " ");
+			if (!token)
+			{
+				free(argv);
+				free(buffer);
+				exit(0);
+			}
+			else
+			{
+				error_code = atoi(token);
+				free(argv);
+				free(buffer);
+				exit(error_code);
+			}
+		}
 		i = 0;
 		while (token != NULL)
 		{
@@ -175,7 +193,9 @@ int main(int ac, char **av)
 			free(full_path);
 			free(argv);
 			free(buffer);
-			exit(127);
+			error_code = 127;
+			continue;
+
 		}
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)

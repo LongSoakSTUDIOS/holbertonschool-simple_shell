@@ -112,7 +112,7 @@ int main(int ac, char **av)
 	int status;
 	char *valid_path = NULL;
 	char *full_path = NULL;
-	int error_code = errno;
+	int error_code = 0;
 
 	(void)ac;
 
@@ -131,7 +131,7 @@ int main(int ac, char **av)
 			free(buffer);
 			if (characters_read == EOF)
 			{
-				return (0);
+				exit(error_code);
 			}
 			return (-1);
 		}
@@ -190,6 +190,7 @@ int main(int ac, char **av)
 			free(full_path);
 			free(argv);
 			free(buffer);
+			error_code = 127;
 			continue;
 
 		}

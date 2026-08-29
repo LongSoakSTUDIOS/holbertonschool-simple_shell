@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <dirent.h>
+#include <errno.h>
 
 extern char **environ;
 
@@ -111,7 +112,7 @@ int main(int ac, char **av)
 	int status;
 	char *valid_path = NULL;
 	char *full_path = NULL;
-	int error_code = 0;
+	int error_code = errno;
 
 	(void)ac;
 
@@ -156,19 +157,15 @@ int main(int ac, char **av)
 		if (strcmp(token, "exit") == 0)
 		{
 			token = strtok(NULL, " ");
-			if (!token)
-			{
-				free(argv);
-				free(buffer);
-				exit(0);
-			}
-			else
+			if (token)
 			{
 				error_code = atoi(token);
-				free(argv);
-				free(buffer);
 				exit(error_code);
 			}
+			free(argv);
+			free(buffer);
+			exit(0);
+		
 		}
 		i = 0;
 		while (token != NULL)
@@ -193,14 +190,13 @@ int main(int ac, char **av)
 			free(full_path);
 			free(argv);
 			free(buffer);
-			error_code = 127;
 			continue;
 
 		}
 		valid_path = find_exec(full_path, argv[0]);
 		if (!valid_path)
 		{
-			perror("Error: Ex");
+			perror("Error");
 			free(full_path);
 			free(argv);
 			free(buffer);
@@ -225,7 +221,7 @@ int main(int ac, char **av)
 				free(full_path);
 				free(argv);
 				free(buffer);
-				exit(127);
+				continue;
 			}
 		}
 		else

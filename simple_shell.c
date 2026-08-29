@@ -92,7 +92,8 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 
-int main(void)
+
+int main(int ac, char **av)
 {
 	pid_t child_id;
 	ssize_t characters_read;
@@ -104,6 +105,8 @@ int main(void)
 	int status;
 	char *valid_path = NULL;
 	char *full_path = NULL;
+
+	(void)ac;
 
 	signal(SIGINT, signal_handler);
 
@@ -162,7 +165,8 @@ int main(void)
 			full_path = strdup("/bin");
 		else if (*full_path == '\0')
 		{
-			perror(argv[0]);
+			fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
+			free(full_path);
 			free(argv);
 			free(buffer);
 			continue;

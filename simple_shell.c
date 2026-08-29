@@ -63,7 +63,7 @@ char *_getenv(const char *name)
 		return (NULL);
 	if (environ[0] == NULL)
 	{
-		empty_string = malloc(sizeof(char *) * 2);
+		empty_string = malloc(sizeof(char) * 1);
 		empty_string[0] = '\0';
 		return (empty_string);
 	}
@@ -79,7 +79,7 @@ char *_getenv(const char *name)
 			if (!token)
 			{
 				free(var);
-				empty_string = malloc(sizeof(char *) * 2);
+				empty_string = malloc(sizeof(char) * 1);
 				empty_string[0] = '\0';
 				return (empty_string);
 			}

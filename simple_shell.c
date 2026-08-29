@@ -164,7 +164,7 @@ int main(int ac, char **av)
 			}
 			free(argv);
 			free(buffer);
-			exit(0);
+			exit(error_code);
 		
 		}
 		i = 0;
@@ -217,17 +217,20 @@ int main(int ac, char **av)
 		{
 			if (execve(valid_path, argv, NULL) == -1)
 			{
+				printf("hello");
 				perror("Error:");
 				free(valid_path);
 				free(full_path);
 				free(argv);
 				free(buffer);
+
 				continue;
 			}
 		}
 		else
 		{
 			wait(&status);
+			error_code = WEXITSTATUS(status);
 			free(valid_path);
 			free(full_path);
 			free(buffer);

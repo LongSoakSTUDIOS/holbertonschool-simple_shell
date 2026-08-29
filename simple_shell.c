@@ -154,7 +154,7 @@ int main(int ac, char **av)
 			return (-1);
 		}
 		token = strtok(buffer, " ");
-		if (strcmp(token, "exit") == 0)
+		if (tokken && strcmp(token, "exit") == 0)
 		{
 			token = strtok(NULL, " ");
 			if (token)

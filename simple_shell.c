@@ -99,6 +99,16 @@ char *_getenv(const char *name)
 	return (NULL);
 }
 
+void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
+{
+	free(buffer);
+	free(argv);
+	if (full_path)
+		free(full_path);
+	if (valid_path)
+		free(valid_path);
+
+}
 
 int main(int ac, char **av)
 {
@@ -128,7 +138,7 @@ int main(int ac, char **av)
 		characters_read = getline(&buffer, &size, stdin);
 		if (characters_read < 0)
 		{
-			free(buffer);
+			free_all(buffer, NULL, NULL, NULL);
 			if (characters_read == EOF)
 			{
 				exit(error_code);
@@ -149,7 +159,7 @@ int main(int ac, char **av)
 		argv = malloc(sizeof(char *) * (argc + 1));
 		if (argv == NULL)
 		{
-			free(buffer);
+			free_all(buffer, NULL, NULL, NULL);
 			perror("Malloc error");
 			return (-1);
 		}
@@ -162,8 +172,7 @@ int main(int ac, char **av)
 				error_code = atoi(token);
 				exit(error_code);
 			}
-			free(argv);
-			free(buffer);
+			free_all(buffer, argv, NULL, NULL);
 			exit(error_code);
 		
 		}
@@ -177,8 +186,7 @@ int main(int ac, char **av)
 		argv[i] = NULL;
 		if (argv[0] == NULL)
 		{
-			free(argv);
-			free(buffer);
+			free_all(buffer, argv, NULL, NULL);
 			continue;
 		}
 		full_path = _getenv("PATH");
@@ -187,9 +195,7 @@ int main(int ac, char **av)
 		else if (*full_path == '\0')
 		{
 			fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
-			free(full_path);
-			free(argv);
-			free(buffer);
+			free_all(buffer, argv, full_path, NULL);
 			error_code = 127;
 			continue;
 
@@ -198,19 +204,14 @@ int main(int ac, char **av)
 		if (!valid_path)
 		{
 			perror("Error");
-			free(full_path);
-			free(argv);
-			free(buffer);
+			free_all(buffer, argv, full_path, NULL);
 			continue;
 		}
 		child_id = fork();
 		if (child_id == -1)
 		{
 			perror("Error:");
-			free(valid_path);
-			free(full_path);
-			free(argv);
-			free(buffer);
+			free_all(buffer, argv, full_path, valid_path);
 			return (1);
 		}
 		if (child_id == 0)
@@ -219,10 +220,7 @@ int main(int ac, char **av)
 			{
 				printf("hello");
 				perror("Error:");
-				free(valid_path);
-				free(full_path);
-				free(argv);
-				free(buffer);
+				free_all(buffer, argv, full_path, valid_path);
 
 				continue;
 			}
@@ -231,10 +229,7 @@ int main(int ac, char **av)
 		{
 			wait(&status);
 			error_code = WEXITSTATUS(status);
-			free(valid_path);
-			free(full_path);
-			free(buffer);
-			free(argv);
+			free_all(buffer, argv, full_path, valid_path);
 		}
 	}
 	return (0);

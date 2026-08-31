@@ -61,7 +61,11 @@ char *_getenv(const char *name)
 	char *empty_string;
 	
 	if (!environ)
+	{
+		printf("_getenv null case");
 		return (NULL);
+	}
+		
 	if (environ[0] == NULL)
 	{
 		empty_string = malloc(sizeof(char) * 1);

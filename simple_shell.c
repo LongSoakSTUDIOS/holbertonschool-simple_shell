@@ -76,7 +76,11 @@ char *_getenv(const char *name)
 	{
 		var = strdup(environ[i]);
 		if (!var)
+		{
+			printf("var check");
 			return (NULL);
+		}
+			
 		token = strtok(var, "=");
 		if(strcmp(name, token) == 0)
 		{
@@ -86,12 +90,14 @@ char *_getenv(const char *name)
 				free(var);
 				empty_string = malloc(sizeof(char) * 1);
 				empty_string[0] = '\0';
+				printf("fuck it check");
 				return (empty_string);
 			}
 			path = strdup(token);
 			if (!path)
 			{
 				free(var);
+				printf("middle _getenv check");
 				return (NULL);
 			}
 			free(var);
@@ -100,6 +106,7 @@ char *_getenv(const char *name)
 		free(var);
 		i++;
 	}
+	printf("last _getenv check");
 	return (NULL);
 }
 

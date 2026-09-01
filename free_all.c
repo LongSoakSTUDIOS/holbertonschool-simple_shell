@@ -8,14 +8,18 @@
 #include <errno.h>
 #include "main.h"
 
-extern char **environ;
-
 void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
 {
-	free(buffer);
-	buffer = NULL;
-	free(argv);
-	argv = NULL;
+	if (buffer)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
+	if (argv)
+	{
+		free(argv);
+		argv = NULL;
+	}
 	if (full_path)
 	{
 		free(full_path);

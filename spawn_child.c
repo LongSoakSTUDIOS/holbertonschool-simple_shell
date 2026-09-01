@@ -8,8 +8,8 @@
 #include <errno.h>
 #include "main.h"
 
-void spawn_child(char **av, char **argv, char *buffer, 
-	int *error_code, char *full_path, int path_flag, char *valid_path)
+void spawn_child(char **argv, char *buffer, int *error_code,
+	char *full_path, int path_flag, char *valid_path)
 {
 	pid_t child_id;
 	int status;

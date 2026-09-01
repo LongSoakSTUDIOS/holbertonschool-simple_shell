@@ -9,6 +9,13 @@
 
 extern char **environ;
 
+typedef struct builtin_s
+{
+	char *command;
+	void (*function)(char **);
+
+}	builtin_t;
+
 void signal_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -120,6 +127,20 @@ void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
 
 }
 
+void print_env(char **argv)
+{
+    int i = 0;
+
+	(void)argv;
+	
+    while (environ[i])
+    {
+        printf("%s\n", environ[i]);
+        i++;
+    }
+
+}
+
 int main(int ac, char **av)
 {
 	pid_t child_id;
@@ -127,8 +148,12 @@ int main(int ac, char **av)
 	char *token = NULL, *buffer = NULL, *valid_path = NULL, *full_path = NULL;
 	size_t size;
 	char **argv = NULL;
-	int argc = 0, status, i = 0, error_code = 0;
+	int argc = 0, status, i = 0, error_code = 0, j = 0, found = 0;
 	int path_flag = 0;
+	builtin_t builtins[] = {
+		{"env" , print_env},
+		{NULL, NULL}
+	};
 	
 	(void)ac;
 
@@ -181,7 +206,6 @@ int main(int ac, char **av)
 			}
 			free_all(buffer, argv, NULL, NULL);
 			exit(error_code);
-		
 		}
 		i = 0;
 		while (token != NULL)
@@ -220,6 +244,23 @@ int main(int ac, char **av)
 		}
 		else
 		{
+			j = 0;
+			while (builtins[j].command != NULL)
+			{
+				if (strcmp(builtins[j].command, argv[0]) == 0)
+				{
+					builtins[j].function(argv);
+					found = 1;
+					break;
+				}
+				j++;
+			}
+			if (found)
+			{
+				free_all(buffer, argv, NULL, NULL);
+				continue;
+			}
+
 			full_path = _getenv("PATH");
 			if (!full_path || *full_path == '\0')
 			{

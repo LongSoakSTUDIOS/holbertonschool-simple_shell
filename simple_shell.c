@@ -221,7 +221,7 @@ int main(int ac, char **av)
 		else
 		{
 			full_path = _getenv("PATH");
-			if (full_path && *full_path == '\0')
+			if (!full_path || *full_path == '\0')
 			{
 				fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
 				free_all(buffer, argv, full_path, NULL);
@@ -231,8 +231,9 @@ int main(int ac, char **av)
 			valid_path = find_exec(full_path, argv[0]);
 			if (!valid_path)
 			{
-				perror("Error");
+				fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
 				free_all(buffer, argv, full_path, NULL);
+				error_code = 127;
 				continue;
 			}
 		}

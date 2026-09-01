@@ -46,7 +46,7 @@ int main(int ac, char **av)
 			if (!valid_path)
 				continue;
 		}
-		spawn_child(av, argv, buffer, &error_code, full_path, path_flag, valid_path);
+		spawn_child(argv, buffer, &error_code, full_path, path_flag, valid_path);
 	}
 	return (0);
 }

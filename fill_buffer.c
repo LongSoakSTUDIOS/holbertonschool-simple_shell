@@ -10,7 +10,7 @@
 
 char *fill_buffer(int *error_code)
 {
-	size_t characters_read;
+	int characters_read;
 	size_t size;
 	char *buffer = NULL;
 

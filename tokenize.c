@@ -8,6 +8,15 @@
 #include <errno.h>
 #include "main.h"
 
+/**
+ * check_exit - 
+ * @token:
+ * @error_code:
+ * @buffer:
+ * @argv:
+ * 
+ * Return: nothing
+ */
 void check_exit(char *token, int *error_code, char *buffer, char **argv)
 {
 	if (token && strcmp(token, "exit") == 0)
@@ -24,6 +33,13 @@ void check_exit(char *token, int *error_code, char *buffer, char **argv)
 	}
 }
 
+/**
+ * tokenize - 
+ * @buffer:
+ * @error_code:
+ * 
+ * Return: nothing
+ */
 char **tokenize(char *buffer, int *error_code)
 {
 		int i = 0;

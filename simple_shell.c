@@ -8,6 +8,13 @@
 #include <errno.h>
 #include "main.h"
 
+/**
+ * main - runs a simplified version of a shell
+ * @ac: num of arguments
+ * @av: array of the arguments
+ * 
+ * Return: 0 on success
+ */
 int main(int ac, char **av)
 {
 	char *buffer = NULL, *valid_path = NULL, *full_path = NULL;

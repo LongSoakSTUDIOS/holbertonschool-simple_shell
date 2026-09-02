@@ -8,6 +8,15 @@
 #include <errno.h>
 #include "main.h"
 
+/**
+ * free_all -
+ * @buffer:
+ * @argv:
+ * @full_path:
+ * @valid_path:
+ * 
+ * Return: 
+ */
 void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
 {
 	if (buffer)

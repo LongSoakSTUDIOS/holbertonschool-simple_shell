@@ -9,7 +9,7 @@
 #include "main.h"
 
 void spawn_child(char **argv, char *buffer, int *error_code,
-	char *full_path, int path_flag, char *valid_path)
+	char *full_path, char *valid_path)
 {
 	pid_t child_id;
 	int status;
@@ -34,9 +34,7 @@ void spawn_child(char **argv, char *buffer, int *error_code,
 	{
 		wait(&status);
 		*error_code = WEXITSTATUS(status);
-		if (path_flag == 0)
-			free_all(buffer, argv, full_path, valid_path);
-		else
-			free_all(buffer, argv, NULL, valid_path);
+		free_all(buffer, argv, full_path, valid_path);
+	
 	}
 }

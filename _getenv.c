@@ -8,22 +8,38 @@
 #include <errno.h>
 #include "main.h"
 
-extern char **environ;
+char *path_variable(char *var)
+{
+	char *empty_string, *token, *path;
+
+	token = strtok(NULL, "=");
+		if (!token)
+		{
+			free(var);
+			empty_string = malloc(sizeof(char) * 1);
+			empty_string[0] = '\0';
+			return (empty_string);
+		}
+		path = strdup(token);
+		if (!path)
+		{
+			free(var);
+			return (NULL);
+		}
+	return (path);
+}
+
 
 char *_getenv(const char *name)
 {
 	int i = 0;
-	char *token;
-	char *var;
-	char *path;
-	char *empty_string;
-	
+	char *token, *empty_string, *var, *path;
+
 	if (!environ)
 	{
 		printf("_getenv null case");
 		return (NULL);
 	}
-		
 	if (environ[0] == NULL)
 	{
 		empty_string = malloc(sizeof(char) * 1);
@@ -34,29 +50,13 @@ char *_getenv(const char *name)
 	{
 		var = strdup(environ[i]);
 		if (!var)
-		{
 			return (NULL);
-		}
-			
 		token = strtok(var, "=");
-		if(strcmp(name, token) == 0)
+		if (strcmp(name, token) == 0)
 		{
-			token = strtok(NULL, "=");
-			if (!token)
-			{
-				free(var);
-				empty_string = malloc(sizeof(char) * 1);
-				empty_string[0] = '\0';
-				return (empty_string);
-			}
-			path = strdup(token);
-			if (!path)
-			{
-				free(var);
-				return (NULL);
-			}
+			path = path_variable(var);
 			free(var);
-			return(path);
+			return (path);
 		}
 		free(var);
 		i++;

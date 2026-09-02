@@ -12,15 +12,15 @@ int main(int ac, char **av)
 {
 	char *buffer = NULL, *valid_path = NULL, *full_path = NULL;
 	char **argv = NULL;
-	int error_code = 0, path_flag = 0;
+	int error_code = 0;
 
 	(void)ac;
 	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		path_flag = 0;
 		buffer = NULL;
 		argv = NULL;
+		full_path = NULL;
 		buffer = fill_buffer(&error_code);
 		if (!buffer)
 			continue;
@@ -30,9 +30,7 @@ int main(int ac, char **av)
 		if (strchr(argv[0], '/') != NULL)
 		{
 			valid_path = is_path(argv, buffer);
-			if (valid_path)
-				path_flag = 1;
-			else
+			if (!valid_path)
 				continue;
 		}
 		else
@@ -46,7 +44,7 @@ int main(int ac, char **av)
 			if (!valid_path)
 				continue;
 		}
-		spawn_child(argv, buffer, &error_code, full_path, path_flag, valid_path);
+		spawn_child(argv, buffer, &error_code, full_path, valid_path);
 	}
 	return (0);
 }

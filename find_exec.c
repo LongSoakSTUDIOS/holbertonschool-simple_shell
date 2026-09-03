@@ -21,7 +21,7 @@ char *find_exec(char *full_path, char *command)
 	{
 		return (NULL);
 	}
-	token = strtok(full_path, ":");
+	token = _strtok(full_path, ":");
 	while (token != NULL)
 	{
 		temp = malloc(strlen(token) + strlen(command) + 2);
@@ -32,7 +32,7 @@ char *find_exec(char *full_path, char *command)
 		{
 			return (temp);
 		}
-		token = strtok(NULL, ":");
+		token = _strtok(NULL, ":");
 		free(temp);
 	}
 	return (NULL);

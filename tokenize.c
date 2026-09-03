@@ -21,13 +21,9 @@ void check_exit(char *token, int *error_code, char *buffer, char **argv)
 {
 	if (token && strcmp(token, "exit") == 0)
 	{
-		token = strtok(NULL, " ");
+		token = _strtok(NULL, " ");
 		if (token)
-		{
-			free_all(buffer, argv, NULL, NULL);
 			*error_code = atoi(token);
-			exit(*error_code);
-		}
 		free_all(buffer, argv, NULL, NULL);
 		exit(*error_code);
 	}
@@ -61,13 +57,13 @@ char **tokenize(char *buffer, int *error_code)
 			perror("Malloc error");
 			return (NULL);
 		}
-		token = strtok(buffer, " ");
+		token = _strtok(buffer, " ");
 		check_exit(token, error_code, buffer, argv);
 		i = 0;
 		while (token != NULL)
 		{
 			argv[i] = token;
-			token = strtok(NULL, " ");
+			token = _strtok(NULL, " ");
 			i++;
 		}
 		argv[i] = NULL;

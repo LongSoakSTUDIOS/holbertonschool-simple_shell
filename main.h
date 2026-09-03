@@ -24,5 +24,6 @@ char *get_valid_path(char **av, char **argv, char *buffer, int *ec, char *fp);
 void spawn_child(char **argv, char *buffer, int *error_code,
 	char *full_path, char *valid_path);
 char *_strtok(char *src, const char *delims);
+int _atoi(char *s);
 
 #endif

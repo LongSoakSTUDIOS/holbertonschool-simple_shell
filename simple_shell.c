@@ -12,7 +12,7 @@
  * main - runs a simplified version of a shell
  * @ac: num of arguments
  * @av: array of the arguments
- * 
+ *
  * Return: 0 on success
  */
 int main(int ac, char **av)

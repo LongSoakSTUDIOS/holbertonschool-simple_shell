@@ -23,7 +23,7 @@ void check_exit(char *token, int *error_code, char *buffer, char **argv)
 	{
 		token = _strtok(NULL, " ");
 		if (token)
-			*error_code = atoi(token);
+			*error_code = _atoi(token);
 		free_all(buffer, argv, NULL, NULL);
 		exit(*error_code);
 	}

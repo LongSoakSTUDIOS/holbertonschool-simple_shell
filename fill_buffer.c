@@ -10,10 +10,10 @@
 
 char *fill_buffer(int *error_code)
 {
-	int characters_read;
+	int characters_read = 0;
 	size_t size;
 	char *buffer = NULL;
-
+	
 	if (isatty(0) == 1)
 		printf("$");
 	characters_read = getline(&buffer, &size, stdin);

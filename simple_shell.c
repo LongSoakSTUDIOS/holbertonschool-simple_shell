@@ -31,7 +31,7 @@ int main(int ac, char **av)
 		buffer = fill_buffer(&error_code);
 		if (!buffer)
 			continue;
-		argv = tokenize(buffer, &error_code);
+		argv = tokenize(buffer, &error_code, av);
 		if (!argv)
 			continue;
 		if (strchr(argv[0], '/') != NULL)

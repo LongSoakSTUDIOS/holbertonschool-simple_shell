@@ -27,7 +27,7 @@ void check_exit(char *token, int *error_code, char *buffer, char **argv, char **
 			*error_code = _atoi(token);
 			if (*error_code < 0)
 			{
-				fprintf(stderr, "%s: 1: exit: Illegal number: %i\n", av[0], *error_code);
+				fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", av[0], token);
 				*error_code = 2;
 			}
 		}

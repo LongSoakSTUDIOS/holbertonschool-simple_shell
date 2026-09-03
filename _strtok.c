@@ -1,4 +1,4 @@
-#include <stddef.h> // NULL
+#include <stddef.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,14 +19,11 @@ char *_strtok(char *src, const char *delims)
 	}
 	else
 		next_token = src;
-
-	//printf("next token at entry: %s\n", next_token);
 	while(strchr(delims, src[i]) != NULL && src[i] != '\0')
 	{
 		src[i] = '\0';
 		src++;
 		next_token++;
-		//printf("next_token middle: %s\n", next_token);
 	}
 	if (src[i] != '\0')
 	{
@@ -42,8 +39,6 @@ char *_strtok(char *src, const char *delims)
 	}
 	else
 		src = NULL;
-
 	token = src;
-	//printf("next_token at exit: %s\n", next_token);
 	return (token);
 }

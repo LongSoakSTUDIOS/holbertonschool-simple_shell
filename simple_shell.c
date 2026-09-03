@@ -19,7 +19,6 @@ int main(int ac, char **av)
 {
 	char *buffer = NULL, *valid_path = NULL, *full_path = NULL;
 	char **argv = NULL;
-	int error_code = 0;
 
 	(void)ac;
 	signal(SIGINT, signal_handler);
@@ -28,10 +27,10 @@ int main(int ac, char **av)
 		buffer = NULL;
 		argv = NULL;
 		full_path = NULL;
-		buffer = fill_buffer(&error_code);
+		buffer = fill_buffer();
 		if (!buffer)
 			continue;
-		argv = tokenize(buffer, &error_code, av);
+		argv = tokenize(buffer, av);
 		if (!argv)
 			continue;
 		if (strchr(argv[0], '/') != NULL)
@@ -44,14 +43,14 @@ int main(int ac, char **av)
 		{
 			if (is_builtin(argv, buffer))
 				continue;
-			full_path = get_full_path(av, argv, buffer, &error_code);
+			full_path = get_full_path(av, argv, buffer);
 			if (!full_path)
 				continue;
-			valid_path = get_valid_path(av, argv, buffer, &error_code, full_path);
+			valid_path = get_valid_path(av, argv, buffer, full_path);
 			if (!valid_path)
 				continue;
 		}
-		spawn_child(argv, buffer, &error_code, full_path, valid_path);
+		spawn_child(argv, buffer, full_path, valid_path);
 	}
 	return (0);
 }

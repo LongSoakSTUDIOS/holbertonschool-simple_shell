@@ -8,7 +8,7 @@
 #include <errno.h>
 #include "main.h"
 
-char *get_valid_path(char **av, char **argv, char *buffer, int *ec, char *fp)
+char *get_valid_path(char **av, char **argv, char *buffer, char *fp)
 {
 	char *valid_path;
 
@@ -17,7 +17,7 @@ char *get_valid_path(char **av, char **argv, char *buffer, int *ec, char *fp)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
 		free_all(buffer, argv, fp, NULL);
-		*ec = 127;
+		errno = 127;
 		return (NULL);
 	}
 	return (valid_path);

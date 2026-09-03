@@ -8,7 +8,7 @@
 #include <errno.h>
 #include "main.h"
 
-char *get_full_path(char **av, char **argv, char *buffer, int *error_code)
+char *get_full_path(char **av, char **argv, char *buffer)
 {
 	char *full_path;
 	
@@ -17,7 +17,7 @@ char *get_full_path(char **av, char **argv, char *buffer, int *error_code)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
 		free_all(buffer, argv, full_path, NULL);
-		*error_code = 127;
+		errno = 127;
 		return (NULL);
 	}
 	return (full_path);

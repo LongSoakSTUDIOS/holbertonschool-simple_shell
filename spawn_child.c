@@ -8,8 +8,7 @@
 #include <errno.h>
 #include "main.h"
 
-void spawn_child(char **argv, char *buffer, int *error_code,
-	char *full_path, char *valid_path)
+void spawn_child(char **argv, char *buffer, char *full_path, char *valid_path)
 {
 	pid_t child_id;
 	int status;
@@ -27,13 +26,13 @@ void spawn_child(char **argv, char *buffer, int *error_code,
 		{
 			perror("Error");
 			free_all(buffer, argv, full_path, valid_path);
-			exit(*error_code);
+			exit(errno);
 		}
 	}
 	else
 	{
 		wait(&status);
-		*error_code = WEXITSTATUS(status);
+		errno = WEXITSTATUS(status);
 		free_all(buffer, argv, full_path, valid_path);
 	
 	}

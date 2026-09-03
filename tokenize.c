@@ -11,45 +11,43 @@
 /**
  * check_exit - 
  * @token:
- * @error_code:
  * @buffer:
  * @argv:
  * 
  * Return: nothing
  */
-void check_exit(char *token, int *error_code, char *buffer, char **argv, char **av)
+void check_exit(char *token, char *buffer, char **argv, char **av)
 {
 	if (token && strcmp(token, "exit") == 0)
 	{
 		token = _strtok(NULL, " ");
 		if (token)
 		{
-			*error_code = _atoi(token);
-			if (*error_code < 0)
+			errno = _atoi(token);
+			if (errno < 0)
 			{
 				fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", av[0], token);
-				*error_code = 2;
+				errno = 2;
 			}
 		}
 		free_all(buffer, argv, NULL, NULL);
-		exit(*error_code);
+		exit(errno);
 	}
 }
 
 /**
  * tokenize - 
  * @buffer:
- * @error_code:
  * 
  * Return: nothing
  */
-char **tokenize(char *buffer, int *error_code, char **av)
+char **tokenize(char *buffer, char **av)
 {
 		int i = 0;
-		int argc = 0;
 		char **argv = NULL;
 		char *token;
 
+		argc = 0;
 		while (buffer[i] != '\0')
 		{
 			if (buffer[i] == ' ')
@@ -65,7 +63,7 @@ char **tokenize(char *buffer, int *error_code, char **av)
 			return (NULL);
 		}
 		token = _strtok(buffer, " ");
-		check_exit(token, error_code, buffer, argv, av);
+		check_exit(token, buffer, argv, av);
 		i = 0;
 		while (token != NULL)
 		{

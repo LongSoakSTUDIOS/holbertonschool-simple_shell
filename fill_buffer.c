@@ -8,7 +8,7 @@
 #include <errno.h>
 #include "main.h"
 
-char *fill_buffer(int *error_code)
+char *fill_buffer()
 {
 	int characters_read = 0;
 	size_t size;
@@ -22,7 +22,7 @@ char *fill_buffer(int *error_code)
 		free_all(buffer, NULL, NULL, NULL);
 		if (characters_read == EOF)
 		{
-			exit(*error_code);
+			exit(errno);
 		}
 		return (NULL);
 	}

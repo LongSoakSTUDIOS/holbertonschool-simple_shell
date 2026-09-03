@@ -12,7 +12,7 @@ char *path_variable(char *var)
 {
 	char *empty_string, *token, *path;
 
-	token = strtok(NULL, "=");
+	token = _strtok(NULL, "=");
 		if (!token)
 		{
 			free(var);
@@ -51,7 +51,7 @@ char *_getenv(const char *name)
 		var = strdup(environ[i]);
 		if (!var)
 			return (NULL);
-		token = strtok(var, "=");
+		token = _strtok(var, "=");
 		if (strcmp(name, token) == 0)
 		{
 			path = path_variable(var);

@@ -3,6 +3,7 @@ int _atoi(char *s)
 	int i = 0;
 	int sign = 1;
 	long int result = 0;
+    int isnumber = 0;
 
 	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		i++;
@@ -21,5 +22,9 @@ int _atoi(char *s)
 		i++;
 	}
 
+    if (isnumber == 0)
+    {
+        return (-1);
+    }
 	return ((int)(result * sign));
 }

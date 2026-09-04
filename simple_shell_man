@@ -1,0 +1,42 @@
+.\" Manpage for simple_shell.
+
+.\" Contact Jeffrey Mori Ubaldini or Nick Bath to correct errors or typos.
+
+.TH man 1 "04 September 2026" "1.0" "simple_shell man page"
+
+.SH NAME
+.B hsh - simple shell
+- Simple shell program with custom functions created in C, to interface with the operating system's file system.
+
+.SH SYNOPSIS
+	./hsh
+	$[executable file] [arguments]
+
+.SH DESCRIPTION
+	The simple shell program runs a instance of a shell. It displays the character ($) as a prompt and waits for user input.
+	The program will run executable files given a valid name (or path) and its arguments, and will run a certain amount of inbuilt custom shell functions.
+
+.SH OPTIONS
+	All executables found in $PATH
+	The following are the implemented custom commands:
+		- env: prints the current working environment.
+		- setenv [name] [value]: sets or overwrites an environment variable given its name and value.
+
+.SH SEE ALSO
+	$PATH
+
+.SH EXAMPLES
+	<current_terminal_prompt> ./hsh
+	$ls -l
+	$/bin/ls
+	$env
+	$setenv HOME name
+
+.SH BUGS
+	Memory leak present when setting or overwriting environment variables, this bug is consistent with glibc set env behavior.
+	Pressing "Ctrl D" twice consecutively, when text has been inputted by user, will cause hsh to exit. This is not consistent with common implementations of a shell.
+
+.SH AUTHOR
+Jeffrey Mori Ubaldini <14824@holbertonstudents.com>
+
+Nick Bath <nicbath99@gmail.com>

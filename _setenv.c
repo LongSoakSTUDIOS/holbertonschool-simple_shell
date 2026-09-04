@@ -17,15 +17,15 @@ int _get_env_index(const char *name)
 	int i = 0;
 	char *token;
 	char *var;
-	
+
 	while (environ[i])
 	{
 		var = strdup(environ[i]);
 		token = strtok(var, "=");
-		if(strcmp(name, token) == 0)
+		if (strcmp(name, token) == 0)
 		{
 			free(var);
-			return(i);
+			return (i);
 		}
 		free(var);
 		i++;
@@ -46,7 +46,6 @@ void create_new_env_var(char **argv)
 	char **new_env;
 	int size = 0;
 	int i = 0;
-	static int is_malloced = 0;
 
 	new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
 	if (!new_var)
@@ -56,7 +55,7 @@ void create_new_env_var(char **argv)
 		return;
 	}
 	sprintf(new_var, "%s=%s", argv[1], argv[2]);
-	while(environ[size])
+	while (environ[size])
 		size++;
 	size++;
 	new_env = malloc((size + 1) * sizeof(char *));
@@ -73,10 +72,10 @@ void create_new_env_var(char **argv)
 	}
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
-	if (is_malloced == 1)
+	if (environ_is_heap == 1)
 		free(environ);
 	else
-		is_malloced = 1;
+		environ_is_heap = 1;
 	environ = new_env;
 }
 /**
@@ -88,7 +87,7 @@ void _setenv(char **argv)
 {
 	int index;
 	char *new_var;
-	
+
 	if (argc != 3)
 	{
 		fprintf(stderr, "hsh: setenv: wrong amount of arguments\n");

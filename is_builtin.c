@@ -7,12 +7,19 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
+/**
+ * is_builtin - function that checks if a command is a built in shell function
+ * and runs the function if found
+ * @argv: tokenized arguments sent from user input within our shell
+ * @buffer: one string of arguments sent from user input within our shell
+ *
+ * Return: returns 1 if a function was found, 0 if not
+ */
 int is_builtin(char **argv, char *buffer)
 {
 	int i = 0;
 	builtin_t builtins[] = {
-		{"env" , print_env},
+		{"env", print_env},
 		{"setenv", _setenv},
 		{NULL, NULL}
 	};

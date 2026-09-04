@@ -7,19 +7,18 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
-extern char **environ;
-
+/**
+ * print_env - function that prints the current environment
+ * @argv: tokenized arguments sent from user input within our shell(voided)
+ */
 void print_env(char **argv)
 {
-    int i = 0;
+	int i = 0;
 
 	(void)argv;
-	
-    while (environ[i])
-    {
-        printf("%s\n", environ[i]);
-        i++;
-    }
-
+	while (environ[i])
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
 }

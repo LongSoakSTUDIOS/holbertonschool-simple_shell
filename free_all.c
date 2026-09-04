@@ -25,4 +25,6 @@ void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
 		free(full_path);
 	if (valid_path)
 		free(valid_path);
+	if (environ_is_heap)
+		free(environ);
 }

@@ -1,31 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <dirent.h>
+#include <errno.h>
+#include "main.h"
+/**
+ * atoi - function that converts a number in a string
+ * to an integer
+ * @s: 
+ *
+ * Return: returns an integer found in the string, or -1 if no number is found
+ */
 int _atoi(char *s)
 {
 	int i = 0;
 	int sign = 1;
 	long int result = 0;
-    int isnumber = 0;
-
+	int isnumber = 0;
 	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		i++;
-
-
 	if (s[i] == '-' || s[i] == '+')
 	{
 		if (s[i] == '-')
 			sign *= -1;
 		i++;
 	}
-
 	while (s[i] >= '0' && s[i] <= '9')
 	{
 		result = (result * 10) + (s[i] - '0');
-        isnumber = 1;
+		isnumber = 1;
 		i++;
 	}
-
-    if (isnumber == 0)
-    {
-        return (-1);
-    }
+	if (isnumber == 0)
+		return (-1);
 	return ((int)(result * sign));
 }

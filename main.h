@@ -16,7 +16,7 @@ void print_env(char **argv);
 char *find_exec(char *full_path, char *command);
 char *_getenv(const char *name);
 void signal_handler(int signum);
-char *fill_buffer();
+char *fill_buffer(void);
 char **tokenize(char *buffer, char **av);
 char *is_path(char **argv, char *buffer);
 int is_builtin(char **argv, char *buffer);

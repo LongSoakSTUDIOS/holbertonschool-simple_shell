@@ -7,8 +7,12 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
-char *fill_buffer()
+/**
+ * fill_buffer - function that calls the getline function
+ * and fills a buffer with the current command inputted into terminal.
+ * The function calls exit when EOF signal is read
+ */
+char *fill_buffer(void)
 {
 	int characters_read = 0;
 	size_t size;

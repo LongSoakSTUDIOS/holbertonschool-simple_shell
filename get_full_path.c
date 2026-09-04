@@ -7,7 +7,10 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
+/**
+ * 
+ * 
+ */
 char *get_full_path(char **av, char **argv, char *buffer)
 {
 	char *full_path;

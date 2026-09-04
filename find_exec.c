@@ -7,20 +7,21 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
-extern char **environ;
-
+/**
+ * find_exec - function that looks for an executable that
+ * matches the command given
+ * @full_path: path variable containing all valid paths to check from
+ * @command: command to look for
+ *
+ * Return: returns the valid path to the executable, or NULL if not found
+ */
 char *find_exec(char *full_path, char *command)
 {
 	char *token;
 	char *temp;
 
-	if (!command)
+	if (!command || !full_path)
 		return (NULL);
-	if (!full_path)
-	{
-		return (NULL);
-	}
 	token = _strtok(full_path, ":");
 	while (token != NULL)
 	{

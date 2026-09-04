@@ -9,34 +9,20 @@
 #include "main.h"
 
 /**
- * free_all -
- * @buffer:
- * @argv:
- * @full_path:
- * @valid_path:
- * 
- * Return: 
+ * free_all - function that frees all dynamically allocated variables at once
+ * @buffer: buffer
+ * @argv: string of strings with each tokenized string of the inputted command
+ * @full_path: full path variable
+ * @valid_path: path to the executable
  */
 void free_all(char *buffer, char **argv, char *full_path, char *valid_path)
 {
 	if (buffer)
-	{
 		free(buffer);
-		buffer = NULL;
-	}
 	if (argv)
-	{
 		free(argv);
-		argv = NULL;
-	}
 	if (full_path)
-	{
 		free(full_path);
-		full_path = NULL;
-	}
 	if (valid_path)
-	{
 		free(valid_path);
-		valid_path = NULL;
-	}
 }

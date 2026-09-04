@@ -5,8 +5,13 @@
 #include <sys/stat.h>
 #include "main.h"
 #include <errno.h>
-
-
+/**
+ * _get_env_index - function that retrieves the index
+ * of an enviornment variable given the name
+ * @name: name of the variable to find
+ *
+ * Return: returns the index if found, -1 if not
+ */
 int _get_env_index(const char *name)
 {
 	int i = 0;
@@ -27,14 +32,62 @@ int _get_env_index(const char *name)
 	}
 	return (-1);
 }
-
-void _setenv(char **argv)
+/**
+ * create_new_env_var - function that creates a new envrionment variable
+ * by dynamically allocating a new enviornment, copying the previous one
+ * and appending a new dynamically allocated variable to the end.
+ * The function also frees the previous environment if the function has been
+ * called before
+ * @argv: tokenized commands from terminal input
+ */
+void create_new_env_var(char **argv)
 {
-	int index;
 	char *new_var;
 	char **new_env;
 	int size = 0;
 	int i = 0;
+	static int is_malloced = 0;
+
+	new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
+	if (!new_var)
+	{
+		errno = -1;
+		perror("Error");
+		return;
+	}
+	sprintf(new_var, "%s=%s", argv[1], argv[2]);
+	while(environ[size])
+		size++;
+	size++;
+	new_env = malloc((size + 1) * sizeof(char *));
+	if (!new_env)
+	{
+		errno = -1;
+		perror("Error");
+		return;
+	}
+	while (environ[i])
+	{
+		new_env[i] = environ[i];
+		i++;
+	}
+	new_env[i] = new_var;
+	new_env[i + 1] = NULL;
+	if (is_malloced == 1)
+		free(environ);
+	else
+		is_malloced = 1;
+	environ = new_env;
+}
+/**
+ * _setenv - function that sets a new enviornment variable if it doesn't
+ * already exits, or overwrites the value of an existing one
+ * @argv: tokenized commands from terminal input
+ */
+void _setenv(char **argv)
+{
+	int index;
+	char *new_var;
 	
 	if (argc != 3)
 	{
@@ -45,33 +98,7 @@ void _setenv(char **argv)
 	index = _get_env_index(argv[1]);
 	if (index == -1)
 	{
-		new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
-		if (!new_var)
-		{
-			errno = -1;
-			perror("Error");
-			return;
-		}
-		sprintf(new_var, "%s=%s", argv[1], argv[2]);
-		while(environ[size])
-			size++;
-		size++;
-		new_env = malloc(size + 1 * sizeof(char *));
-		if (!new_env)
-		{
-			errno = -1;
-			perror("Error");
-			return;
-		}
-		while (environ[i])
-		{
-			new_env[i] = environ[i];
-			i++;
-		}
-		new_env[i] = new_var;
-		new_env[i + 1] = NULL;
-		environ = new_env;
-		return;
+		create_new_env_var(argv);
 	}
 	else
 	{

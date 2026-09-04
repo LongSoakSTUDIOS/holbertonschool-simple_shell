@@ -9,11 +9,13 @@
 #include "main.h"
 
 /**
- * check_exit - 
- * @token:
- * @buffer:
- * @argv:
- * 
+ * check_exit - compares the provided token for the literal string
+ * exit and if there is a paremeter given
+ * @token: single string that has been tokenized from buffer
+ * @buffer: entire string input from user
+ * @argv: tokenized strings from buffer split by a space separator
+ * @av: an array holding the arguments passed to the shell
+ *
  * Return: nothing
  */
 void check_exit(char *token, char *buffer, char **argv, char **av)
@@ -36,10 +38,14 @@ void check_exit(char *token, char *buffer, char **argv, char **av)
 }
 
 /**
- * tokenize - 
- * @buffer:
- * 
- * Return: nothing
+ * tokenize - uses strtok to split the full input buffer into individual
+ * strings on a space separator
+ * @buffer: a string of the users input
+ * @av: an array holding the arguments passed to the shell, used for
+ * exit to print a custom error
+ *
+ * Return: An array of strings containing the users full input on success,
+ * NULL on failure
  */
 char **tokenize(char *buffer, char **av)
 {

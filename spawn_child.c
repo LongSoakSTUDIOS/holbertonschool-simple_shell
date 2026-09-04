@@ -8,6 +8,16 @@
 #include <errno.h>
 #include "main.h"
 
+/**
+ * spawn_child - creates a child process that will execute the command
+ * found from the input string by the user
+ * @argv: tokenized strings from buffer split by a space separator
+ * @buffer: entire string input from user
+ * @full_path: a string containing the PATH environ variable
+ * @valid_path: a string containing the path to the executable
+ *
+ * Return: nothing
+ */
 void spawn_child(char **argv, char *buffer, char *full_path, char *valid_path)
 {
 	pid_t child_id;
@@ -34,6 +44,5 @@ void spawn_child(char **argv, char *buffer, char *full_path, char *valid_path)
 		wait(&status);
 		error_code = WEXITSTATUS(status);
 		free_all(buffer, argv, full_path, valid_path);
-	
 	}
 }

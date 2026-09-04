@@ -2,11 +2,15 @@
 #define MAIN_H
 
 extern char **environ;
-
 extern int argc;
 extern int environ_is_heap;
 extern int error_code;
 
+/**
+ * struct builtin_s - struct for built in functions
+ * @command: command name
+ * @function: function associated to command
+ */
 typedef struct builtin_s
 {
 	char *command;

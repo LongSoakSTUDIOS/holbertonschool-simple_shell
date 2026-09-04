@@ -15,19 +15,19 @@
  */
 char *_strtok(char *src, const char *delims)
 {
-  	static char *next_token;
-  	char *token;
-  	int i = 0;
-  
-  	if (!src)
+	static char *next_token;
+	char *token;
+	int i = 0;
+
+	if (!src)
 	{
 		if (*next_token == '\0')
 			return (NULL);
-    	src = next_token;
+		src = next_token;
 	}
 	else
 		next_token = src;
-	while(strchr(delims, src[i]) != NULL && src[i] != '\0')
+	while (strchr(delims, src[i]) != NULL && src[i] != '\0')
 	{
 		src[i] = '\0';
 		src++;

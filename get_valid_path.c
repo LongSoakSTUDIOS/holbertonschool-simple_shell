@@ -7,7 +7,16 @@
 #include <dirent.h>
 #include <errno.h>
 #include "main.h"
-
+/**
+ * get_valid_path - function that checks if a path is valid, and prints
+ * an error if not
+ * @av: arguments sent when running our shell (Used to print program name)
+ * @argv: tokenized arguments sent from user input within our shell
+ * @buffer: one string of arguments sent from user input within our shell
+ * @fp: full_path to check
+ *
+ * Return: returns a valid path to an executable, NULL if failed to find one
+ */
 char *get_valid_path(char **av, char **argv, char *buffer, char *fp)
 {
 	char *valid_path;

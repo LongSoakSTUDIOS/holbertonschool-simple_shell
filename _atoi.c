@@ -8,9 +8,9 @@
 #include <errno.h>
 #include "main.h"
 /**
- * atoi - function that converts a number in a string
+ * _atoi - function that converts a number in a string
  * to an integer
- * @s: 
+ * @s: string to convert
  *
  * Return: returns an integer found in the string, or -1 if no number is found
  */
@@ -20,6 +20,7 @@ int _atoi(char *s)
 	int sign = 1;
 	long int result = 0;
 	int isnumber = 0;
+
 	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		i++;
 	if (s[i] == '-' || s[i] == '+')

@@ -11,13 +11,15 @@
  * fill_buffer - function that calls the getline function
  * and fills a buffer with the current command inputted into terminal.
  * The function calls exit when EOF signal is read
+ *
+ * Return: returns a filled buffer, NULL if failed
  */
 char *fill_buffer(void)
 {
 	int characters_read = 0;
 	size_t size;
 	char *buffer = NULL;
-	
+
 	if (isatty(0) == 1)
 		printf("$");
 	characters_read = getline(&buffer, &size, stdin);

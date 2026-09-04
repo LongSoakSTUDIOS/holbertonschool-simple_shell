@@ -36,7 +36,7 @@ char *path_variable(void)
  * @name: name of the variable to find
  *
  * Return: returns an empty string if environment is empty, a dynamically
- * allocated empty string of size 1 if the environment variable 
+ * allocated empty string of size 1 if the environment variable
  * exists but the value is NULL, or a dynamically allocated string of the
  * enviornment variable's value
  */

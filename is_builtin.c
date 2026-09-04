@@ -21,7 +21,7 @@ int is_builtin(char **argv, char *buffer)
 	{
 		if (strcmp(builtins[i].command, argv[0]) == 0)
 		{
-			errno = 0;
+			error_code = 0;
 			builtins[i].function(argv);
 			free_all(buffer, argv, NULL, NULL);
 			return (1);

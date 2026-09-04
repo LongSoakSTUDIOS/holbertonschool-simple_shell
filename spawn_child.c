@@ -26,13 +26,13 @@ void spawn_child(char **argv, char *buffer, char *full_path, char *valid_path)
 		{
 			perror("Error");
 			free_all(buffer, argv, full_path, valid_path);
-			exit(errno);
+			exit(error_code);
 		}
 	}
 	else
 	{
 		wait(&status);
-		errno = WEXITSTATUS(status);
+		error_code = WEXITSTATUS(status);
 		free_all(buffer, argv, full_path, valid_path);
 	
 	}

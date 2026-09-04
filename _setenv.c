@@ -51,7 +51,7 @@ void create_new_env_var(char **argv)
 	new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
 	if (!new_var)
 	{
-		errno = -1;
+		error_code = -1;
 		perror("Error");
 		return;
 	}
@@ -62,7 +62,7 @@ void create_new_env_var(char **argv)
 	new_env = malloc((size + 1) * sizeof(char *));
 	if (!new_env)
 	{
-		errno = -1;
+		error_code = -1;
 		perror("Error");
 		return;
 	}
@@ -92,7 +92,7 @@ void _setenv(char **argv)
 	if (argc != 3)
 	{
 		fprintf(stderr, "hsh: setenv: wrong amount of arguments\n");
-		errno = 7;
+		error_code = 7;
 		return;
 	}
 	index = _get_env_index(argv[1]);
@@ -105,7 +105,7 @@ void _setenv(char **argv)
 		new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
 		if (!new_var)
 		{
-			errno = -1;
+			error_code = -1;
 			perror("Error");
 			return;
 		}

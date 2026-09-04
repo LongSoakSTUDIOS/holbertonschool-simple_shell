@@ -23,15 +23,15 @@ void check_exit(char *token, char *buffer, char **argv, char **av)
 		token = _strtok(NULL, " ");
 		if (token)
 		{
-			errno = _atoi(token);
-			if (errno < 0)
+			error_code = _atoi(token);
+			if (error_code < 0)
 			{
 				fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", av[0], token);
-				errno = 2;
+				error_code = 2;
 			}
 		}
 		free_all(buffer, argv, NULL, NULL);
-		exit(errno);
+		exit(error_code);
 	}
 }
 

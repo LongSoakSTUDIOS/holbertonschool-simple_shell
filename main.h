@@ -5,6 +5,8 @@ extern char **environ;
 
 int argc;
 
+int error_code;
+
 typedef struct builtin_s
 {
 	char *command;

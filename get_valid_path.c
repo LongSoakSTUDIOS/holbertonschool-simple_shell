@@ -17,7 +17,7 @@ char *get_valid_path(char **av, char **argv, char *buffer, char *fp)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", av[0], argv[0]);
 		free_all(buffer, argv, fp, NULL);
-		errno = 127;
+		error_code = 127;
 		return (NULL);
 	}
 	return (valid_path);

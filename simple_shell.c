@@ -19,6 +19,7 @@ int main(int ac, char **av)
 {
 	char *buffer = NULL, *valid_path = NULL, *full_path = NULL;
 	char **argv = NULL;
+	error_code = 0;
 
 	(void)ac;
 	signal(SIGINT, signal_handler);

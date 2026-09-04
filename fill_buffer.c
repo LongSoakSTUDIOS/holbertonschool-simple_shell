@@ -26,7 +26,7 @@ char *fill_buffer(void)
 		free_all(buffer, NULL, NULL, NULL);
 		if (characters_read == EOF)
 		{
-			exit(errno);
+			exit(error_code);
 		}
 		return (NULL);
 	}

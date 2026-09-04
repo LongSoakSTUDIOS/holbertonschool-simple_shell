@@ -10,13 +10,12 @@
 /**
  * path_variable - function that checks if the value
  * of an enviornment variable is NULL and creates a string with the value
- * @var: variable to check
  *
  * Return: returns a dynamically allocated string of size 1 in case the
  * value is NULL, a dynamically allocated string of the value if it exits
  * NULL if malloc fails
  */
-char *path_variable(char *var)
+char *path_variable(void)
 {
 	char *empty_string, *token, *path;
 
@@ -62,7 +61,7 @@ char *_getenv(const char *name)
 		token = _strtok(var, "=");
 		if (strcmp(name, token) == 0)
 		{
-			path = path_variable(var);
+			path = path_variable();
 			free(var);
 			return (path);
 		}

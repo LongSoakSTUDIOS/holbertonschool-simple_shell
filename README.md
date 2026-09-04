@@ -29,63 +29,57 @@ gcc -Wall -Werror -Wextra -pedantic -Wno-format -std=gnu89 *c
 ```
 
 ## Description
-This repo contains a remade printf function that is very limited in scope for Holberton School Australia's integration project. This function was created in a group of 2 over the course of 2 weeks and only covers 6 different formatters which are listed below. During the prototyping phase we were unsure of how to handle the buffer for printf and were deciding between two options, write each character as we encountered it or store them in a linked list and print everything out. At the time we had thought that we wanted to reduce how many times we were calling the write function to reduce processing and had just learned linked lists, so we decided to create it with linked lists. This proved quite challenging process for us and resulted in 12 different scripts to ensure it worked and was mostly compliant with out enforced 'Betty style'. We are happy with the result that we were able to create.
+This repo contains a simple shell that covers all executables located in /bin as well the the builtin commands listed below in the builtins header. We were also able handle crtl C signal and one input of crtl D.The simple shell was created in a group of 2 over the course of 2 weeks as our final project for C.
 
-## Formatters
-Available via our printf are the following formatters:
--%d, decimals
--%i, integer
--%c, chars
--%s, strings
--%b, binary
--%u, unsigned integer
+## Builtins Available
+Available via our shell are the following builtin commands:
+- env
+- setenv
 
-## Functions
+## Global Variables
+- argc
+- environ_is_heap
+- error_code
 
-### _printf(const char *format, ...)
-This function takes any string and any number of arguments. The arguments will only be invoked given they have a correlating formatter in the string eg (%d , 111). 
-
-Upon successful return, the **_printf()** function returns the number of characters printed. On failure, -1 is returned.
-
-### create_node(string_cont_t **head, char *string_value)
-This function takes a double pointer to the head of a linked listed and a string to create a node within a linked list. All formatters with valid content to be printed will have their content converted to a string and then invoke create_node. This function returns a pointer to the new node that is created storing the string it was passed.
-
-### free_nodes(string_cont_t *head)
-This function takes a pointer to the head of a linked list and moves through the list freeing the allocated memory until the tail of the list. This function returns nothing.
-
-### store_binary(string_cont_t **head, unsigned int n)
-This function takes a double pointer to the head of a linked list and an unsigned int n. It will convert n into a binary number and then into a string to be stored in a node. This function returns a pointer to the new node that is created storing the converted string.
-
-### store_char(string_cont_t **head, char c)
-This function takes a double pointer to the head of a linked list and a char c. C will be converted to a string and stored within a node. This function returns a pointer to the new node that is created storing the converted string.
-
-### store_dec(string_cont_t **head, int n)
-This function takes a double pointer to the head of a linked list and a integer n. N will be converted to a string and stored within a node. This function returns a pointer to the new node that is created storing the converted string.
-
-### store_string(string_cont_t **head, char *string)
-This function takes a double pointer to the head of a linked list and a string string. String gets stored into a node. This function returns a pointer to the new node that is created storing the string. 
-
-### store_unsigned(string_cont_t **head, unsigned int n)
-This function takes a double pointer to the head of a linked list and an unsigned integer n. N gets converted into a string and then stored into a node. This function returns a pointer to the new node that is created storing the converted string.
-
-### print_list(string_cont_t *head)
-This function takes a pointer to the head of a linked list, moving through each node and writing its string contents to the stdout until the tail. This function returns a int sum, containing the length of each node added together.
 
 ## Limitations
-### Memory
-We have since learnt from our prototyping phase that our approach to printf using linked lists is worse on both memory and processing than it would be simply writing to the stdout for each character. Depending on the input our printf can end up having large amounts of allocated memory taken up just to store a string.
+### Crtl D
+- not working like the shell but even our teachers werent able to understand it
+- two Ctrl Ds
 
-### Non betty complaint
-Our _printf() script is the only script that is not complaint with Betty's demand of 'only 40 lines of code per function'. We were able to reduce this number to only 49 lines of code but made the decision that any further refactoring would result in worse code overall.
+### command line history
 
-### Static mallocs
-There are 3 instances where we have malloc'd a node and have used a hardcoded static value.
 
-### Complexity
-By using linked lists we been able to achieve the same result as our classmates (using only write per character), but have created more scripts and more lines of code. Each time we need to write something to the standard out there needs to be at least 3-4 functions that need to be called. 
+### setenv override
+When you overwrite a variable because you can not diff between a stack and heap allocated. our mimics the glibc which expects a memory leak by popentially losing a pointer by the previously allocated varliable. The checker wants us to solve this but we chose not to.
+
+the laternative to fix this would be to create a data strucutre to hold the previously allocated variables. on exit free those. We felt this was outside of the scope and wanted to the simple shell close to the operating of the glibc shell.
+
+```
+==11793== HEAP SUMMARY:
+==11793==     in use at exit: 10 bytes in 1 blocks
+==11793==   total heap usage: 10 allocs, 9 frees, 2,502 bytes allocated
+==11793== 
+==11793== LEAK SUMMARY:
+==11793==    definitely lost: 0 bytes in 0 blocks
+==11793==    indirectly lost: 0 bytes in 0 blocks
+==11793==      possibly lost: 0 bytes in 0 blocks
+==11793==    still reachable: 10 bytes in 1 blocks
+==11793==         suppressed: 0 bytes in 0 blocks
+```
+
+
+
+### Appeasement of the checker
+PATH = ''
+
 
 ## Takeaways
-If we were to do this project again, we would spend more time in the prototyping phase understanding the impact that inbuilt function have on a system. We would also chose to let go of our pride and not continue to built a linked list printf just to not waste the 2 hours we spent white boarding.
+- refactoring of a larger project to make the code work but not for scability
+- started the project with a large main that 'worked' so when we started refactioring we found ourselfs passing up to 6 arguments to make a function work like 
+- it has been enjoyabled to look deeper into builtin c functionms that we previously took for advantage
+- it is extremely clear how on larger projecrts how quickly you can lose track of memory ownership
+- naming conventions are still a struggle point for us, when we were refactoring we named things for a single purpoise but then they started being used for mulitple purposes. we feel that we got better on naming the functions post refacotoring.
 
 ## Authors
 

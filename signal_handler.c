@@ -8,9 +8,13 @@
 #include <errno.h>
 #include "main.h"
 
-
-extern char **environ;
-
+/**
+ * signal_handler - on SIGINT signal the shell will move to a new line,
+ * reprint the prompt and flush the stdout
+ * @signum: the signal number received (expected to be SIGINT)
+ *
+ * Return: nothing
+ */
 void signal_handler(int signum)
 {
 	if (signum == SIGINT)

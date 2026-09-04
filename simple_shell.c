@@ -8,6 +8,7 @@
 #include <errno.h>
 #include "main.h"
 
+
 /**
  * main - runs a simplified version of a shell
  * @ac: num of arguments
@@ -19,7 +20,10 @@ int main(int ac, char **av)
 {
 	char *buffer = NULL, *valid_path = NULL, *full_path = NULL;
 	char **argv = NULL;
-	error_code = 0;
+
+	int argc = 0;
+	int error_code = 0;
+	int environ_is_heap = 0;
 
 	(void)ac;
 	signal(SIGINT, signal_handler);

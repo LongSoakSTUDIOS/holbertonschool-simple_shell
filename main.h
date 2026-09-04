@@ -3,9 +3,9 @@
 
 extern char **environ;
 
-int argc;
-
-int error_code;
+extern int argc;
+extern int environ_is_heap;
+extern int error_code;
 
 typedef struct builtin_s
 {

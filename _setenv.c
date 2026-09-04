@@ -46,7 +46,6 @@ void create_new_env_var(char **argv)
 	char **new_env;
 	int size = 0;
 	int i = 0;
-	static int is_malloced = 0;
 
 	new_var = malloc(strlen(argv[1]) + strlen(argv[2]) + 2);
 	if (!new_var)
@@ -73,10 +72,10 @@ void create_new_env_var(char **argv)
 	}
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
-	if (is_malloced == 1)
+	if (environ_is_heap == 1)
 		free(environ);
 	else
-		is_malloced = 1;
+		environ_is_heap = 1;
 	environ = new_env;
 }
 /**

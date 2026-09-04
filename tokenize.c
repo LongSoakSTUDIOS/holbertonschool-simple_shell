@@ -33,6 +33,8 @@ void check_exit(char *token, char *buffer, char **argv, char **av)
 			}
 		}
 		free_all(buffer, argv, NULL, NULL);
+		if (environ_is_heap)
+			free(environ);
 		exit(error_code);
 	}
 }
